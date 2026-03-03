@@ -47,7 +47,10 @@ const barlow = localFont({
 export const metadata: Metadata = {
   title: "Stage — Join the Waitlist",
   description:
-    "Get early access to Mysh AI — the next generation workflow automation platform launching soon.",
+    "Get early access to Stage — Your brand strategy done by AI. Built on 5 years of real methodology.",
+  openGraph: {
+    images: ["/opengraph-image.png"],
+  },
 };
 
 export default function RootLayout({
