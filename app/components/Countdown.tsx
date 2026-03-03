@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 /* ── target date: ~225 days from 2026-03-03 ─────────────────────────────── */
-const TARGET_DATE = new Date("2026-04-14T00:00:00");
+const TARGET_DATE = new Date("2026-03-14T00:00:00");
 
 interface TimeLeft {
     days: number;
