@@ -6,7 +6,6 @@ export default function HeroCard() {
     return (
         <section className="hero-card" id="hero-section">
             <div className="card">
-                <img src="/svg/logo.svg" alt="stage" className="nav-logo" width={50} height={50} style={{ marginBottom: '20px' }} />
                 <h1 className="card-heading">Join the <span className="highlight">waitlist</span></h1>
 
                 <p className="card-sub">
