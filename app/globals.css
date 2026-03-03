@@ -1,26 +1,411 @@
 @import "tailwindcss";
 
+/* ───────────────────────────────  RESET & BASE  ─────────────────────────── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --bg: #F5FFFC;
+  /* 60% Dominant */
+  --card-bg: rgba(255, 255, 255, 0.45);
+  --card-border: rgba(26, 26, 26, 0.08);
+  --accent: #FFC947;
+  /* 10% Accent */
+  --accent-hover: #fbbd2e;
+  --secondary: #FFEBB3;
+  /* 30% Secondary */
+  --success: #22FF7A;
+  --text-primary: #1A1A1A;
+  --text-muted: rgba(26, 26, 26, 0.6);
+  --avatar-1: #FFC947;
+  --avatar-2: #22FF7A;
+  --avatar-3: #FFEBB3;
+  /* Fonts are provided via Next.js localFont variables in layout.tsx */
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ────────────────────────  MOVING BRAND GRADIENTS  ───────────────────────── */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+body::before {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  top: -100px;
+  right: -100px;
+  animation: moveBlob1 25s infinite alternate ease-in-out;
+}
+
+body::after {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--success) 0%, transparent 70%);
+  bottom: -150px;
+  left: -150px;
+  animation: moveBlob2 30s infinite alternate ease-in-out;
+}
+
+.bg-blob-3 {
+  position: fixed;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
+  top: 40%;
+  left: 30%;
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.5;
+  animation: moveBlob3 20s infinite alternate ease-in-out;
+}
+
+@keyframes moveBlob1 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(-30%, 20%) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-10%, 40%) scale(0.9);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes moveBlob2 {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  50% {
+    transform: translate(40%, -20%) rotate(90deg);
+  }
+
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+@keyframes moveBlob3 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(-20%, -30%) scale(1.2);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+/* ─────────────────────────────  PAGE WRAPPER  ────────────────────────────── */
+.page-wrapper {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100dvh;
+  padding: 28px 20px 40px;
+}
+
+/* ───────────────────────────────  NAVIGATION  ───────────────────────────── */
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: auto;
+}
+
+.nav-logo {
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
+}
+
+.nav-logo:hover {
+  opacity: 1;
+}
+
+/* ──────────────────────────────  HERO CARD  ──────────────────────────────── */
+.hero-card {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 540px;
+}
+
+.card {
+  width: 100%;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 22px;
+  padding: 48px 40px 42px;
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.card-heading {
+  font-family: var(--font-serif);
+  font-size: 2.22rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.1;
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+.highlight {
+  color: var(--accent);
+}
+
+.card-sub {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  text-align: center;
+  max-width: 380px;
+  margin-top: -12px;
+}
+
+/* ──────────────────────────  EMAIL INPUT ROW  ────────────────────────────── */
+.email-row {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+}
+
+.email-input {
+  flex: 1;
+  padding: 0 24px;
+  height: 52px;
+  border-radius: 999px;
+  border: 1px solid rgba(26, 26, 26, 0.1);
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.email-input::placeholder {
+  color: rgba(26, 26, 26, 0.35);
+}
+
+.email-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(255, 201, 71, 0.15);
+}
+
+.cta-btn {
+  padding: 0 32px;
+  height: 52px;
+  border-radius: 999px;
+  border: none;
+  background: var(--accent);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease, transform 0.18s ease, box-shadow 0.25s ease;
+}
+
+.cta-btn:hover {
+  background: var(--accent-hover);
+  transform: scale(1.03);
+  box-shadow: 0 8px 24px rgba(255, 201, 71, 0.35);
+}
+
+.cta-btn:active {
+  transform: scale(0.97);
+}
+
+/* ──────────────────────────  SUCCESS MESSAGE  ────────────────────────────── */
+.success-msg {
+  font-size: 0.82rem;
+  color: #10b981;
+  font-weight: 600;
+  text-align: center;
+  margin-top: -12px;
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ───────────────────────────  SOCIAL PROOF  ──────────────────────────────── */
+.social-proof {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatars {
+  display: flex;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  border: 2px solid rgba(20, 20, 20, 1);
+}
+
+.avatar:not(:first-child) {
+  margin-left: -10px;
+}
+
+.social-text {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.social-text strong {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+}
+
+/* ───────────────────────────  COUNTDOWN  ─────────────────────────────────── */
+.countdown {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.countdown-unit:not(:last-child) {
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.countdown-number {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  background: linear-gradient(135deg, var(--text-primary) 0%, #444 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown-label {
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-top: 6px;
+}
+
+/* ──────────────────────────  ERROR STATE  ────────────────────────────────── */
+.email-input.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.error-msg {
+  font-size: 0.78rem;
+  color: #ef4444;
+  font-weight: 500;
+  text-align: center;
+  margin-top: -12px;
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+/* ─────────────────────────────  RESPONSIVE  ──────────────────────────────── */
+@media (max-width: 560px) {
+  .card {
+    padding: 36px 22px 32px;
+    border-radius: 18px;
+  }
+
+  .card-heading {
+    font-size: 1.7rem;
+  }
+
+  .card-sub {
+    font-size: 0.82rem;
+  }
+
+  .email-row {
+    flex-direction: column;
+  }
+
+  .cta-btn {
+    width: 100%;
+  }
+
+  .countdown-unit {
+    padding: 0 12px;
+  }
+
+  .countdown-number {
+    font-size: 1.3rem;
+  }
+
+  .nav-link {
+    padding: 7px 12px;
+    font-size: 0.75rem;
+  }
 }
