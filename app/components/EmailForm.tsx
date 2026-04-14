@@ -5,7 +5,7 @@ import { saveEmail } from "@/app/actions";
 
 type Status = "idle" | "success" | "error" | "loading";
 
-export default function EmailForm() {
+export default function EmailForm({ onSuccess }: { onSuccess?: () => void }) {
     const [email, setEmail] = useState("");
     const [status, setStatus] = useState<Status>("idle");
     const [errorMessage, setErrorMessage] = useState("");
@@ -18,6 +18,7 @@ export default function EmailForm() {
             if (result.success) {
                 setStatus("success");
                 setEmail("");
+                if (onSuccess) onSuccess();
             } else {
                 setStatus("error");
                 setErrorMessage(result.error || "Something went wrong.");
@@ -33,7 +34,7 @@ export default function EmailForm() {
     };
 
     return (
-        <>
+        <div className="email-form-container">
             <div className="email-row">
                 <input
                     id="email-input"
@@ -67,6 +68,6 @@ export default function EmailForm() {
                     {errorMessage}
                 </p>
             )}
-        </>
+        </div>
     );
 }

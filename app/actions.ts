@@ -28,3 +28,26 @@ export async function saveEmail(email: string) {
         return { success: false, error: "Failed to join the list." };
     }
 }
+
+export async function getWaitlistCount() {
+    if (!process.env.RESEND_API_KEY || !audienceId) {
+        return 10; // Fallback to base
+    }
+
+    try {
+        const { data, error } = await resend.contacts.list({
+            audienceId: audienceId,
+        });
+
+        if (error || !data) {
+            console.error("Resend Error fetching count:", error);
+            return 10;
+        }
+
+        // Resend returns { data: Contact[], ... }
+        return data.data.length + 10; // Starting from 10 + actual contacts for a boost, or just the length
+    } catch (err) {
+        console.error("Failed to fetch count:", err);
+        return 10;
+    }
+}
