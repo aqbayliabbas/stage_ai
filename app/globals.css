@@ -358,7 +358,7 @@ body {
   .email-input {
     height: 102px;
     font-size: 1.1rem;
-    padding: 0 24px;
+    padding: 24px 24px;
     text-align: center;
     width: 100%;
   }
