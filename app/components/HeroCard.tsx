@@ -14,7 +14,6 @@ export default function HeroCard() {
 
                 <EmailForm />
                 <SocialProof />
-                <Countdown />
             </div>
         </section>
     );

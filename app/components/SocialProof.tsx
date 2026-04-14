@@ -1,7 +1,7 @@
 const AVATARS = [
-    { letter: "J", color: "var(--avatar-1)" },
-    { letter: "A", color: "var(--avatar-2)" },
-    { letter: "M", color: "var(--avatar-3)" },
+    { letter: "J", color: "#4B5563" },
+    { letter: "A", color: "#374151" },
+    { letter: "M", color: "#1F2937" },
 ];
 
 export default function SocialProof() {
@@ -12,14 +12,14 @@ export default function SocialProof() {
                     <div
                         key={a.letter}
                         className="avatar"
-                        style={{ backgroundColor: a.color, color: "#1A1A1A" }}
+                        style={{ backgroundColor: a.color, color: "#FFFFFF" }}
                     >
                         {a.letter}
                     </div>
                 ))}
             </div>
-            <span className="social-text" style={{ color: "#1A1A1A" }}>
-                <strong style={{ color: "#1A1A1A" }}>~10+</strong> founders already joined
+            <span className="social-text">
+                <strong style={{ color: "var(--text-primary)" }}>~10+</strong> founders already joined
             </span>
         </div>
     );
